@@ -1,14 +1,4 @@
 #!/usr/bin/env bash
-#USER='vagrant'
-#PASS='123'
-#
-#sudo usermod -p $(openssl passwd -1 ${PASS}) $USER
-#sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
-#sudo systemctl restart sshd
-
-# Disable selinux
-#setenforce 0
-#sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
 # Disable swap
 swapoff -a
@@ -24,17 +14,32 @@ sysctl --system
 
 echo "Install Docker..."
 echo
-curl -fsSL https://get.docker.com | bash
+
+sudo apt-get update
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update  
+
+sudo apt-get install docker-ce=5:20.10.13~3-0~ubuntu-focal docker-ce-cli=5:20.10.13~3-0~ubuntu-focal containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 sudo systemctl enable --now docker
 systemctl status docker | grep "Active:"
 sudo usermod -aG docker vagrant
 
-# echo "Install rke..."
-#echo
-#wget https://github.com/rancher/rke/releases/download/v1.3.15/rke_linux-amd64
-#sudo mv rke_linux-amd64 /usr/local/bin/rke
-#rke up
 sudo reboot
+
+#List the available versions:
+#apt-cache madison docker-ce | awk '{ print $3 }'
 
 ##export KUBECONFIG=./kube_config_cluster.yml

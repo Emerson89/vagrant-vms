@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 vms = {
-'centos-srv' => {'memory' => '4048', 'cpus' => '2', 'ip' => '10', 'box' => 'centos/7'},
+'centos-srv' => {'memory' => '1024', 'cpus' => '2', 'ip' => '10', 'box' => 'centos/7'},
 #'alpine-srv' => {'memory' => '1024', 'cpus' => '2', 'ip' => '10', 'box' => 'generic/alpine38'},
 #'amz-srv' => {'memory' => '1024', 'cpus' => '1', 'ip' => '11', 'box' => 'stakahashi/amazonlinux2'},
 #'rocky-srv' => {'memory' => '1024', 'cpus' => '1', 'ip' => '12', 'box' => 'rockylinux/8'},
