@@ -17,6 +17,34 @@ nodes:
   ssh_cert_path: ""
   labels: {}
   taints: []
+# - address: 192.168.3.13
+#   port: "22"
+#   internal_address: 192.168.3.13
+#   role:
+#   - worker
+#   hostname_override: node2
+#   user: vagrant
+#   docker_socket: /var/run/docker.sock
+#   ssh_key: ""
+#   ssh_key_path: .vagrant/machines/node2/virtualbox/private_key
+#   ssh_cert: ""
+#   ssh_cert_path: ""
+#   labels: {}
+#   taints: []
+- address: 192.168.3.15
+  port: "22"
+  internal_address: 192.168.3.15
+  role:
+  - worker
+  hostname_override: node3
+  user: vagrant
+  docker_socket: /var/run/docker.sock
+  ssh_key: ""
+  ssh_key_path: private_key
+  ssh_cert: ""
+  ssh_cert_path: ""
+  labels: {}
+  taints: []     
 services:
   etcd:
     image: ""
@@ -105,7 +133,7 @@ services:
     win_extra_binds: []
     win_extra_env: []
 network:
-  plugin: calico
+  plugin: flannel
   options: {}
   mtu: 0
   node_selector: {}
